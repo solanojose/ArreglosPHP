@@ -9,28 +9,28 @@ function agregarProducto($producto, $precio, $cantidad) {
         'precio' => $precio,
         'cantidad' => $cantidad
     );
-    echo "Producto agregado al carrito.\n";
+    echo "Producto agregado con exito !!.\n";
 }
 
 
 function listarProductos() {
     global $carrito;
     if (empty($carrito)) {
-        echo "Por favor ingrese un producto.\n";
+        echo "No hay productos.\n";
     } else {
-        echo "Productos en el carrito:\n";
-        foreach ($carrito as $item) {
-            echo "- " . $item['producto'] . " - Precio: $" . $item['precio'] . " - Cantidad: " . $item['cantidad'] . "\n";
+        echo "-- Productos --\n";
+        foreach ($carrito as $producto) {
+            echo "- " . $producto['producto'] . " - Precio: $" . $producto['precio'] . " - Cantidad: " . $producto['cantidad'] . "\n";
         }
     }
 }
 
 
-function calcularTotal() {
+function totalCompra() {
     global $carrito;
     $total = 0;
-    foreach ($carrito as $item) {
-        $total += $item['precio'] * $item['cantidad'];
+    foreach ($carrito as $producto) {
+        $total += $producto['precio'] * $producto['cantidad'];
     }
     return $total;
 }
@@ -39,7 +39,7 @@ function calcularTotal() {
 while (true) {
     echo "\n1. Agregar producto.\n";
     echo "2. Listar productos.\n";
-    echo "3. Ver total de la compra.\n";
+    echo "3. Ver total.\n";
     echo "4. Salir\n";
     
 
@@ -56,14 +56,14 @@ while (true) {
             listarProductos();
             break;
         case '3':
-            $total = calcularTotal();
+            $total = totalCompra();
             echo "Total de la compra: $" . $total . "\n";
             break;
         case '4':
             echo "Que tenga buen dia :)\n";
             exit;
         default:
-            echo "Opción no válida. Por favor, ingrese una opción válida.\n";
+            echo "Opción no valida!!\n";
     }
 }
 
