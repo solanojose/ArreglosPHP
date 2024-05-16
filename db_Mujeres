@@ -142,3 +142,18 @@ CREATE TABLE tusuario
 	correo TEXT(100),
 	contraseña TEXT(100)
 );
+
+
+DELIMITER $$
+
+CREATE TRIGGER crearUsuario
+AFTER INSERT ON tmujer
+FOR EACH ROW
+BEGIN
+    INSERT INTO tusuario (correo, contraseña)
+    VALUES (NEW.correo, NEW.contraseña);
+
+END $$;
+
+
+DELIMITER ;
