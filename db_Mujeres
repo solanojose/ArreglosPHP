@@ -1,0 +1,144 @@
+DROP DATABASE db_mujeres;
+CREATE DATABASE db_mujeres;
+USE db_mujeres;
+
+CREATE TABLE ttipoDocumento
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	nombre TEXT(100)
+);
+
+
+CREATE TABLE tlocalidad
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	nombre TEXT(100)
+);
+
+CREATE TABLE tciudad
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	nombre TEXT(100)
+);
+
+
+CREATE TABLE tocupacion
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	nombre TEXT(100)
+);
+
+CREATE TABLE tmunicipio
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    codigo INT,
+	nombre TEXT(100) 
+);
+
+
+
+CREATE TABLE tcategoria
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	nombre TEXT(100) 
+);
+
+
+CREATE TABLE ttiposervicio
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	nombre TEXT(100)
+);
+
+
+
+CREATE TABLE tmanzana
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	codigo INT,
+	nombre TEXT(100),
+	direccion TEXT(100),
+	id_localidad INT,
+	id_municipio INT,
+	FOREIGN KEY (id_localidad) REFERENCES tLocalidad (id),
+	FOREIGN KEY (id_municipio) REFERENCES tMunicipio (id)
+);
+
+
+
+CREATE TABLE tservicio 
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	codigo INT,
+	nombre TEXT(100),
+	descripcion TEXT(100),
+	id_categoria INT,
+	id_tipoServicio INT,
+	FOREIGN KEY (id_categoria) REFERENCES tcategoria (id),
+	FOREIGN KEY (id_tipoServicio) REFERENCES ttiposervicio (id)
+);
+
+
+CREATE TABLE testablecimiento 
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	codigo INT,
+	nombre TEXT(100),
+	responsable TEXT(100),
+	direccion TEXT(100),
+	id_servicio INT,
+	FOREIGN KEY (id_servicio) REFERENCES tservicio (id)
+);
+
+
+CREATE TABLE tmujer
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	id_tipoDoc INT,
+	num_documento INT,
+	nombre TEXT(100),
+	apellido TEXT(100),
+	telefono INT,
+	correo TEXT(100),
+	contraseña TEXT(100),
+	id_ciudad INT,
+	direccion TEXT(100),
+	id_ocupacion INT,
+	FOREIGN KEY (id_tipoDoc) REFERENCES tTipoDocumento (id),
+	FOREIGN KEY (id_ciudad) REFERENCES tCiudad (id),
+    FOREIGN KEY (id_ocupacion) REFERENCES tocupacion (id)
+);
+
+
+
+CREATE TABLE tmujeresporservicio 
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	id_mujer INT,
+	id_Servicio INT,
+	FOREIGN KEY (id_mujer) REFERENCES tMujer (id),
+	FOREIGN KEY (id_servicio) REFERENCES tServicio (id)
+);
+
+
+
+CREATE TABLE tpropuestamujer
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	id_mujer INT,
+	id_manzana INT,
+	id_servicio INT,
+	dia DATE,
+	hora TIME,
+	FOREIGN KEY (id_mujer) REFERENCES tMujer (id),
+	FOREIGN KEY (id_manzana) REFERENCES tManzana (id),
+	FOREIGN KEY (id_servicio) REFERENCES tServicio (id)
+);
+
+
+CREATE TABLE tusuario
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	correo TEXT(100),
+	contraseña TEXT(100)
+);
